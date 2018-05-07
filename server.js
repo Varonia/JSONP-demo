@@ -29,7 +29,7 @@ var server = http.createServer(function(request, response) {
     response.setHeader('Content-Type', 'application/javascript')
     response.statusCode = 200
     response.write(`
-      formation.call(undefined,{
+      ${query.callback}.call(undefined,{
         "tt":"hello"
       }
       )

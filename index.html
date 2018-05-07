@@ -5,16 +5,28 @@
 	<title>Document</title>
 </head>
 <body>
-<button id="button">你点我啊</button>
-<script>
-	var formation = function(data){
-			alert(data.tt)
-		}
-	button.addEventListener('click',(e)=>{
-		let script = document.createElement('script')
-		script.src = 'http://jack.com:8002/pay?callback=formation'
-		document.body.appendChild(script)
-	})
-</script>
+	<button id="button">你点我啊</button>
+	<script>
+		button.addEventListener('click',()=>{
+			let script = document.createElement('script')
+			// 生成随机请求名
+			let functionName = 'request' + parseInt(Math.random()*10000,10) 
+			// 调用JSONP返回的数据
+			window[functionName] = function(data){  
+				alert(data.tt)
+			}
+			//使用生成的随机请求名发起请求
+			script.src = 'http://jack.com:8002/pay?callback=' + functionName	
+			document.body.appendChild(script)
+
+			// 清除请求生成的冗余标签
+			script.onload = function(e){
+				e.currentTarget.remove()
+			}
+			script.onerror = function(e){
+				e.currentTarget.remove()
+			}
+		})
+	</script>
 </body>
 </html>
