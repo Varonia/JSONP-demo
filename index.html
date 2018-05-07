@@ -5,6 +5,16 @@
 	<title>Document</title>
 </head>
 <body>
-	<script src="jack.com/"></script>
+<button id="button">你点我啊</button>
+<script>
+	var formation = function(data){
+			alert(data.tt)
+		}
+	button.addEventListener('click',(e)=>{
+		let script = document.createElement('script')
+		script.src = 'http://jack.com:8002/pay?callback=formation'
+		document.body.appendChild(script)
+	})
+</script>
 </body>
 </html>

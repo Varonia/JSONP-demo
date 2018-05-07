@@ -3,26 +3,39 @@ var fs = require('fs')
 var url = require('url')
 var port = process.argv[2]
 
-if(!port){
+if (!port) {
   console.log('请指定端口号好不啦？\nnode server.js 8888 这样不会吗？')
   process.exit(1)
 }
 
-var server = http.createServer(function(request, response){
+var server = http.createServer(function(request, response) {
   var parsedUrl = url.parse(request.url, true)
-  var pathWithQuery = request.url 
+  var pathWithQuery = request.url
   var queryString = ''
-  if(pathWithQuery.indexOf('?') >= 0){ queryString = pathWithQuery.substring(pathWithQuery.indexOf('?')) }
-  var path = parsedUrl.pathname
+  if (pathWithQuery.indexOf('?') >= 0) { queryString = pathWithQuery.substring(pathWithQuery.indexOf('?')) }
+    var path = parsedUrl.pathname
   var query = parsedUrl.query
   var method = request.method
 
   /******** 从这里开始看，上面不要看 ************/
-
   if (path === '/'){
-    response.write('hi')
+    var string = fs.readFileSync('./index.html','utf8')
+    response.setHeader('Content-Type', 'text/html;charset=utf8')
+    response.statusCode = 200
+    response.write(string)
     response.end()
-}
+  }
+  if (path === '/pay') {
+    response.setHeader('Content-Type', 'application/javascript')
+    response.statusCode = 200
+    response.write(`
+      formation.call(undefined,{
+        "tt":"hello"
+      }
+      )
+      `)
+    response.end()
+  }
 
   /******** 代码结束，下面不要看 ************/
 })
