@@ -15,6 +15,7 @@
 			window[functionName] = function(data){  
 				alert(data.tt)
 			}
+
 			//使用生成的随机请求名发起请求
 			script.src = 'http://jack.com:8002/pay?callback=' + functionName	
 			document.body.appendChild(script)
